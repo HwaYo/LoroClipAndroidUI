@@ -1,28 +1,26 @@
 package info.devsusu.material;
 
-import android.content.Context;
+import android.graphics.Color;
+import android.graphics.DashPathEffect;
+import android.graphics.Paint;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.method.CharacterPickerDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 
 public class MaterialListActivity extends ActionBarActivity {
@@ -42,27 +40,35 @@ public class MaterialListActivity extends ActionBarActivity {
         setSupportActionBar(mToolbar);
 
         // Change this Adapter to fit LoroClip
-        recordListAdapter = new RecordListAdapter(getBaseContext());
+        recordListAdapter = new RecordListAdapter(this);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setOrientation(OrientationHelper.VERTICAL);
 
-        ListView recordList = (ListView)findViewById(R.id.record_list);
+        RecyclerView recordList = (RecyclerView)findViewById(R.id.record_list);
+        recordList.setLayoutManager(manager);
         recordList.setAdapter(recordListAdapter);
+        recordList.addItemDecoration(
+                new HorizontalDividerItemDecoration
+                        .Builder(this)
+                        .sizeResId(R.dimen.divider)
+                        .color(Color.GRAY)
+                        .marginResId(R.dimen.leftmargin, R.dimen.rightmargin)
+                        .build());
 
         // Click Listeners
-        recordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recordList.setClickable(true);
+//        recordList.addOnItemTouchListener(
+//            new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+//                @Override public void onItemClick(View view, int position) {
+//                    showToast("onTouch");
+//                }
+//            })
+//        );
+        recordList.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("ListView Item Click", "List Number " + position);
-                showToast("List Number " + position);
-
-            // TODO
-            // Play the Recording
-        }
-        });
-        recordList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.i("ListView Item Long Click", "List Number " + position);
-                showToast("List Number " + position);
+            public boolean onLongClick(View v) {
+//                showToast("List Number " + position);
+                showToast("onLongClick");
 
                 // TODO
                 // Open Dialog
@@ -79,7 +85,7 @@ public class MaterialListActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getBaseContext(),"New Recording",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "New Recording", Toast.LENGTH_SHORT).show();
 
                 // TODO
                 // Start new Recording
@@ -87,8 +93,7 @@ public class MaterialListActivity extends ActionBarActivity {
         });
 
         // Floating button disappers if you enable code below
-        // fab.attachToListView(recordList);
-        // fab.show();
+//         fab.attachToRecyclerView(recordList);
 
     }
 

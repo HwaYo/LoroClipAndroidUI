@@ -1,11 +1,15 @@
 package info.devsusu.material;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,50 +18,18 @@ import java.util.Random;
 /**
  * Created by susu on 5/19/15.
  */
-public class RecordListAdapter extends BaseAdapter {
+public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.ViewHolder> {
 
     List<Record> recordList;
 
     private Context mContext;
+    private LayoutInflater mLayoutInflater;
 
     public RecordListAdapter( Context context ) {
+        super();
         mContext = context;
+        mLayoutInflater = LayoutInflater.from(context);
         recordList = getDataForListView();
-    }
-
-    @Override
-    public int getCount() {
-        return recordList.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return recordList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        if( convertView == null ) {
-            LayoutInflater inflater =
-                    (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_item, parent, false);
-        }
-
-        TextView title = (TextView)convertView.findViewById(R.id.list_item_title);
-        TextView time = (TextView)convertView.findViewById(R.id.list_item_time);
-
-        Record record = recordList.get(position);
-
-        title.setText(record.title);
-        time.setText(record.length);
-
-        return convertView;
     }
 
     public List<Record> getDataForListView() {
@@ -75,5 +47,37 @@ public class RecordListAdapter extends BaseAdapter {
         }
 
         return recordList;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mLayoutInflater.inflate(R.layout.list_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+        TextView title = (TextView) holder.viewHolder.findViewById(R.id.list_item_title);
+        title.setText(recordList.get(position).title);
+
+        TextView length = (TextView) holder.viewHolder.findViewById(R.id.list_item_time);
+        length.setText(recordList.get(position).length);
+    }
+
+    @Override
+    public int getItemCount() {
+        return recordList.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+
+        View viewHolder;
+
+        public ViewHolder(View view) {
+            super(view);
+            viewHolder = view;
+        }
+
     }
 }
