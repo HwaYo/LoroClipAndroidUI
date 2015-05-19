@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="myPrimaryColor">#31A493</color>
+    <color name="myPrimaryDarkColor">#65B891</color>
+    <color name="myAccentColor">#FF4081</color>
+    <color name="myDrawerBackground">#DADFF7</color>
+    <color name="myWindowBackground">#FFFFFF</color>
+    <color name="myTextPrimaryColor">#232C33</color>
+    <color name="myNavigationColor">#000</color>
+
+    <color name="gradient_start">#232C33</color>
+
+    <drawable name="pressed_gray">#0c000000</drawable>
+    <drawable name="selected_gray">#2c000000</drawable>
+
+</resources>
