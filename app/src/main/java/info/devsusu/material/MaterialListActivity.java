@@ -3,24 +3,23 @@ package info.devsusu.material;
 import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.method.CharacterPickerDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 
-import java.text.FieldPosition;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,40 +27,90 @@ import java.util.Random;
 
 public class MaterialListActivity extends ActionBarActivity {
 
+    private static final String tag = "RecordListView";
+
     private Toolbar mToolbar;
     RecordListAdapter recordListAdapter;
-
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_material_list);
+
+        // Android L Style Title Bar
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
-        
+
+        // Change this Adapter to fit LoroClip
+        recordListAdapter = new RecordListAdapter(getBaseContext());
+
         ListView recordList = (ListView)findViewById(R.id.record_list);
-
-        recordListAdapter = new RecordListAdapter();
-
         recordList.setAdapter(recordListAdapter);
 
-//        mRecyclerView = (RecyclerView) findViewById(R.id.record_recycler);
-//
-//        mRecyclerView.setHasFixedSize(true);
-//
-//        mLayoutManager = new LinearLayoutManager(this);
-//        mLayoutManager = new GridLayoutManager(this);
-//        mRecyclerView.setLayoutManager(mLayoutManager);
+        // Click Listeners
+        recordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("ListView Item Click", "List Number " + position);
+                showToast("List Number " + position);
 
-//        mAdapter = new RecycleAdapter(getDataForListView());
-//        mRecyclerView.setAdapter(mAdapter);
+            // TODO
+            // Play the Recording
+        }
+        });
+        recordList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i("ListView Item Long Click", "List Number " + position);
+                showToast("List Number " + position);
 
+                // TODO
+                // Open Dialog
+
+                showListDialog();
+
+                return false;
+            }
+        });
+
+        // Floating Button on Bottom Right Corner
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.attachToListView(recordList);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Toast.makeText(getBaseContext(),"New Recording",Toast.LENGTH_SHORT).show();
+
+                // TODO
+                // Start new Recording
+            }
+        });
+
+        // Floating button disappers if you enable code below
+        // fab.attachToListView(recordList);
+        // fab.show();
+
+    }
+
+    public boolean showListDialog (){
+
+        new MaterialDialog.Builder(this)
+                .title(R.string.edit_record)
+                .items(R.array.record_options)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        showToast(which + ": " + text);
+                    }
+                })
+                .show();;
+
+        return false;
+
+    }
+
+    public void showToast( String msg ) {
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -84,68 +133,5 @@ public class MaterialListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public class Record {
-        String title;
-        String length;
-
-    }
-
-    public List<Record> getDataForListView() {
-
-        List<Record> recordList = new ArrayList<Record>();
-        Random len = new Random();
-
-        for(int i=0;i<10;i++)
-        {
-
-            Record record= new Record();
-            record.title = "RECORD NUMBER : "+i;
-            record.length = (int)(len.nextFloat()*60) + "m";
-            recordList.add(record);
-        }
-
-        return recordList;
-    }
-
-    public class RecordListAdapter extends BaseAdapter {
-
-        List<Record> recordList = getDataForListView();
-
-        @Override
-        public int getCount() {
-            return recordList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return recordList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            if( convertView == null ) {
-                LayoutInflater inflater =
-                        (LayoutInflater) MaterialListActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.list_item, parent, false);
-            }
-
-            TextView title = (TextView)convertView.findViewById(R.id.list_item_title);
-            TextView time = (TextView)convertView.findViewById(R.id.list_item_time);
-
-            Record record = recordList.get(position);
-
-            title.setText(record.title);
-            time.setText(record.length);
-
-            return convertView;
-        }
     }
 }
