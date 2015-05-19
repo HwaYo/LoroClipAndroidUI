@@ -41,10 +41,9 @@ public class MaterialListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_material_list);
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
-
-        String[] codeLearnChapters = new String[] { "Android Introduction","Android Setup/Installation","Android Hello World","Android Layouts/Viewgroups","Android Activity & Lifecycle","Intents in Android"};
-        ArrayAdapter<String> codeLearnArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, codeLearnChapters);
+        
         ListView recordList = (ListView)findViewById(R.id.record_list);
+
         recordListAdapter = new RecordListAdapter();
 
         recordList.setAdapter(recordListAdapter);
