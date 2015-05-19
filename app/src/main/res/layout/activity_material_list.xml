@@ -15,12 +15,14 @@
 
         <!-- Placing Views here -->
         <ListView
-            android:id="@+id/record_list"
-            android:divider="@color/myPrimaryColor"
-            android:dividerHeight="0.5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="match_parent"
+            android:id="@+id/record_list"
+            android:fadingEdge="none"
+            android:fadingEdgeLength="0dp"
+            android:divider="@color/myGrayColor"
+            android:dividerHeight="0.1px"
+            android:animationCache="false">
         </ListView>
 
         <com.melnykov.fab.FloatingActionButton
