@@ -1,8 +1,6 @@
 package info.devsusu.material;
 
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
-import android.graphics.Paint;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,13 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -39,12 +33,13 @@ public class MaterialListActivity extends ActionBarActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
         setSupportActionBar(mToolbar);
 
+        RecyclerView recordList = (RecyclerView)findViewById(R.id.record_list);
+
         // Change this Adapter to fit LoroClip
-        recordListAdapter = new RecordListAdapter(this);
+        recordListAdapter = new RecordListAdapter(this, recordList);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(OrientationHelper.VERTICAL);
 
-        RecyclerView recordList = (RecyclerView)findViewById(R.id.record_list);
         recordList.setLayoutManager(manager);
         recordList.setAdapter(recordListAdapter);
         recordList.addItemDecoration(
@@ -54,30 +49,6 @@ public class MaterialListActivity extends ActionBarActivity {
                         .color(Color.GRAY)
                         .marginResId(R.dimen.leftmargin, R.dimen.rightmargin)
                         .build());
-
-        // Click Listeners
-        recordList.setClickable(true);
-//        recordList.addOnItemTouchListener(
-//            new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-//                @Override public void onItemClick(View view, int position) {
-//                    showToast("onTouch");
-//                }
-//            })
-//        );
-        recordList.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                showToast("List Number " + position);
-                showToast("onLongClick");
-
-                // TODO
-                // Open Dialog
-
-                showListDialog();
-
-                return false;
-            }
-        });
 
         // Floating Button on Bottom Right Corner
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -92,30 +63,9 @@ public class MaterialListActivity extends ActionBarActivity {
             }
         });
 
-        // Floating button disappers if you enable code below
+        // Floating button disappears if you enable code below
 //         fab.attachToRecyclerView(recordList);
 
-    }
-
-    public boolean showListDialog (){
-
-        new MaterialDialog.Builder(this)
-                .title(R.string.edit_record)
-                .items(R.array.record_options)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        showToast(which + ": " + text);
-                    }
-                })
-                .show();;
-
-        return false;
-
-    }
-
-    public void showToast( String msg ) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
