@@ -5,6 +5,13 @@
 
     <dimen name="toolbar_elevation">4dp</dimen>
     <dimen name="divider">0.3dp</dimen>
-    <dimen name="leftmargin">15dp</dimen>
+    <dimen name="leftmargin">60dp</dimen>
     <dimen name="rightmargin">15dp</dimen>
+
+    <dimen name="circleradius">40dp</dimen>
+    <dimen name="circlemargin">10dp</dimen>
+
+    <dimen name="textsizebig">20sp</dimen>
+    <dimen name="textsizenormal">16sp</dimen>
+    <dimen name="textsizesmall">12sp</dimen>
 </resources>

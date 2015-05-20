@@ -7,4 +7,16 @@
     <string name="agree">agree</string>
     <string name="disagree">disagree</string>
     <string name="edit_record">Edit Record</string>
+    <string name="title_activity_record">New Record</string>
+
+    <string name="discard_record">Discard</string>
+    <string name="discard_confirm">Recording would not be saved!</string>
+
+    <string name="discard">Discard</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="save_record">Save Recording</string>
+    <string name="set_record_name">Set your record name</string>
+
+    <string name="record_name_hint"></string>
 </resources>
