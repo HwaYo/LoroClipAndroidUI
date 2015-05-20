@@ -63,9 +63,6 @@ public class MaterialListActivity extends ActionBarActivity {
             }
         });
 
-        // Floating button disappears if you enable code below
-//         fab.attachToRecyclerView(recordList);
-
     }
 
     @Override
@@ -83,8 +80,14 @@ public class MaterialListActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings : /* Do something like showing SettingsActivity */ break;
+            case R.id.action_sync :
+
+                // TODO
+                // Sync with Server
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

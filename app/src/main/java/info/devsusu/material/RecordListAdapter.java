@@ -39,6 +39,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         mRecyclerView = recyclerView;
     }
 
+    // Creating Dummy Data for RecyclerView
     public List<Record> getDataForListView() {
 
         List<Record> recordList = new ArrayList<Record>();
@@ -58,9 +59,12 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        // Inflate view and Attach Click Listeners
         View view = mLayoutInflater.inflate(R.layout.list_item, parent, false);
         view.setOnClickListener(new RecyclerOnClickListener());
         view.setOnLongClickListener(new RecyclerOnLongClickListener());
+
         return new ViewHolder(view);
     }
 
@@ -116,10 +120,12 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
             // Do something after Selection
             showListDialog();
 
+            // Need to return true to block OnClick
             return true;
         }
     }
 
+    // Simple List Dialog Popup
     public boolean showListDialog (){
 
         new MaterialDialog.Builder(mContext)
