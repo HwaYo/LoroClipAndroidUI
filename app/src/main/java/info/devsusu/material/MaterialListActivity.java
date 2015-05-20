@@ -1,5 +1,6 @@
 package info.devsusu.material;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ public class MaterialListActivity extends ActionBarActivity {
     private static final String tag = "RecordListView";
 
     private Toolbar mToolbar;
-    RecordListAdapter recordListAdapter;
+    private RecordListAdapter recordListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MaterialListActivity extends ActionBarActivity {
                 new HorizontalDividerItemDecoration
                         .Builder(this)
                         .sizeResId(R.dimen.divider)
-                        .color(Color.GRAY)
+                        .color(R.color.myGrayColor)
                         .marginResId(R.dimen.leftmargin, R.dimen.rightmargin)
                         .build());
 
@@ -60,6 +61,8 @@ public class MaterialListActivity extends ActionBarActivity {
 
                 // TODO
                 // Start new Recording
+                Intent intent = new Intent(MaterialListActivity.this,RecordActivity.class);
+                startActivity(intent);
             }
         });
 

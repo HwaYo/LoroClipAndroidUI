@@ -2,6 +2,7 @@ package info.devsusu.material;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
     }
 
     // Creating Dummy Data for RecyclerView
-    public List<Record> getDataForListView() {
+    private List<Record> getDataForListView() {
 
         List<Record> recordList = new ArrayList<Record>();
         Random len = new Random();
@@ -102,6 +103,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
 
             // TODO
             // Start Playing Activity
+
             Log.i(TAG, record.toString() + "OnClick");
             showToast(record.toString() + "OnClick");
         }
